@@ -1,0 +1,85 @@
+#include <stdio.h>
+
+void linearSearch(int a[], int n, int item) {
+    int i, flag = 0;
+    for (i = 0; i < n; i++) {
+        if (a[i] == item) {
+            printf("Item is found at index %d\n", i);
+            flag = 1;
+            break;
+        }
+    }
+    if (flag == 0) {
+        printf("Item not found\n");
+    }
+}
+
+void binarySearch(int a[], int n, int item) {
+    int i, j, temp;
+
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (a[i] > a[j]) {
+                temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+
+    int lb = 0, ub = n - 1, mid;
+    while (lb <= ub) {
+        mid = (lb + ub) / 2;
+        if (a[mid] == item) {
+            printf("Item is found at index %d\n", mid);
+            return;
+        } else if (a[mid] < item) {
+            lb = mid + 1;
+        } else {
+            ub = mid - 1;
+        }
+    }
+    printf("Item not found\n");
+}
+
+int main() {
+    int a[50], n, i, item, ch;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+    printf("Enter the elements of the array: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    printf("Enter the item to search: ");
+    scanf("%d", &item);
+
+    do {
+        printf("\nMENU\n");
+        printf("1. Linear Search\n");
+        printf("2. Binary Search\n");
+        printf("3. Exit\n");
+        printf("Enter your option: ");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1:
+                linearSearch(a, n, item);
+                break;
+
+            case 2:
+                binarySearch(a, n, item);
+                break;
+
+            case 3:
+                printf("Exit.\n");
+                break;
+
+            default:
+                printf("Invalid option\n");
+        }
+    } while (ch != 3);
+
+    return 0;
+}
